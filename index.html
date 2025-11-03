@@ -1,1003 +1,395 @@
 <!doctype html>
-
-<html lang="es" dir="ltr">
-
+<html lang="es">
 <head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-<meta charset="utf-8" />
+<title>personapp — tu lector de texto gratis | TTS español y PDF</title>
+<meta name="description" content="personapp: lector de texto GRATIS en español. Léelo con voz (TTS), pega texto o carga PDF/TXT. Funciona directo en tu navegador (sin subir archivos)."/>
+<meta name="keywords" content="lector de texto gratis, TTS español, convertir texto a voz, leer PDF gratis, lectura en voz alta, sintetizador de voz, Web Speech API, pdf.js, accesibilidad, lectura rápida"/>
 
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- Open Graph / Twitter -->
+<meta property="og:title" content="personapp — tu lector de texto gratis"/>
+<meta property="og:description" content="Lee en voz alta cualquier texto o PDF desde tu navegador. Rápido, privado y sin subir archivos."/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://example.com/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
 
+<!-- Datos estructurados -->
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"SoftwareApplication",
+"name":"personapp — lector de texto gratis",
+"applicationCategory":"UtilitiesApplication",
+"operatingSystem":"Web",
+"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+"description":"Lector de texto y PDF que usa Web Speech API (TTS) y pdf.js. Funciona localmente en el navegador.",
+"inLanguage":"es"
+}
+</script>
 
-
-<title>PersonAPP.cl — Directorio de Apps de Inteligencia Artificial (ChatGPT, Gemini, Grok) y Música con IA</title>
-
-<meta name="description" content="PersonAPP.cl: el directorio en español de apps de inteligencia artificial. Accede a ChatGPT, Google Gemini y Grok. Además, herramientas para crear canciones con IA (Suno, Udio, RVC, ElevenLabs, Adobe Enhance) y ejemplos." />
-
-<link rel="canonical" href="https://personapp.cl/" />
-
-<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
-
-<meta name="keywords" content="inteligencia artificial, apps IA, ChatGPT, Google Gemini, Grok, xAI, IA en Chile, mejores apps IA 2025, crear música con IA, Suno, Udio, RVC, ElevenLabs, Adobe Enhance, NostalgIA" />
-
-<meta name="author" content="PersonAPP.cl" />
-
-
-
-<!-- Open Graph -->
-
-<meta property="og:type" content="website" />
-
-<meta property="og:site_name" content="PersonAPP.cl" />
-
-<meta property="og:title" content="PersonAPP.cl — Directorio de Apps de IA y Música con IA" />
-
-<meta property="og:description" content="Accede a ChatGPT, Gemini y Grok. Aprende a crear canciones con IA: Suno, Udio, RVC, ElevenLabs y más." />
-
-<meta property="og:url" content="https://personapp.cl/" />
-
-<meta property="og:image" content="https://personapp.cl/img/preview.png" />
-
-
-
-<!-- Twitter -->
-
-<meta name="twitter:card" content="summary_large_image" />
-
-<meta name="twitter:title" content="PersonAPP.cl — Directorio de Apps de IA" />
-
-<meta name="twitter:description" content="ChatGPT, Gemini, Grok y herramientas para hacer música con IA." />
-
-<meta name="twitter:image" content="https://personapp.cl/img/preview.png" />
-
-
-
-<!-- Favicon SVG -->
-
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='12' ry='12' width='64' height='64' fill='%2300ff88'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='34' font-family='Montserrat,Arial' fill='%23000'%3EPA%3C/text%3E%3C/svg%3E" />
-
-
-
-<!-- Fuentes -->
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap">
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap">
-
-
-
+<!-- Estilos -->
 <style>
-
 :root{
-
-  --bg:#000; --text:#e8ffe8; --muted:#a0b7a0; --accent:#00ff88;
-
-  --card:#0a0f0a; --ring:#103b20; --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.6);
-
-  --neon:#ff7a00; --neon-soft:#ff9a3c;
-
+/* Modo claro */
+--bg:#ffffff; --text:#0b0c0f; --muted:#5b6676;
+--line:#e6e8ee; --panel:#ffffff;
+--ok:#10b981; --warn:#f59e0b; --err:#ef4444;
+--radius:14px; --max:1100px;
+/* Rutas del borde anime (reemplaza con tus imágenes) */
+--anime-left:url('/assets/anime/left.jpg');
+--anime-right:url('/assets/anime/right.jpg');
+--anime-top:url('/assets/anime/top.jpg');
+--anime-bottom:url('/assets/anime/bottom.jpg');
 }
 
+/* Reset base */
 *{box-sizing:border-box}
-
 html,body{height:100%}
-
-body{margin:0;background:#000;color:var(--text);font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow-x:hidden}
-
-a{color:inherit}
-
-h1,h2{line-height:1.15}
-
-
-
-/* Canvas Matrix global (verde) */
-
-#matrix{
-
-  position:fixed; inset:0; z-index:-1; display:block;
-
-  background:#000 radial-gradient(1200px 600px at 15% -10%, #00ff8840, transparent 60%) no-repeat,
-
-             radial-gradient(1200px 600px at 85% -20%, #00ff8840, transparent 60%) no-repeat;
-
+body{
+margin:0;background:var(--bg);color:var(--text);
+font:16px/1.55 -apple-system,BlinkMacSystemFont,Inter,Roboto,Segoe UI,Arial,sans-serif;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
 }
 
-@media (prefers-reduced-motion: reduce){ #matrix,#matrix-orange{display:none} }
-
-
+/* Marco anime estético alrededor de la página */
+.frame{position:relative;min-height:100dvh;isolation:isolate;}
+.frame::before,
+.frame::after{content:"";position:fixed;top:0;bottom:0;width:28px;z-index:2;pointer-events:none;background-size:cover;background-position:center}
+.frame::before{left:0;background-image:var(--anime-left), linear-gradient(180deg,#ffd1f5,#c9e7ff);}
+.frame::after{right:0;background-image:var(--anime-right), linear-gradient(180deg,#c9e7ff,#ffd1f5);}
+.frame .top, .frame .bottom{content:"";position:fixed;left:28px;right:28px;height:24px;z-index:2;pointer-events:none;background-size:cover;background-position:center}
+.frame .top{top:0;background-image:var(--anime-top), linear-gradient(90deg,#ffd1f5,#c9e7ff);}
+.frame .bottom{bottom:0;background-image:var(--anime-bottom), linear-gradient(90deg,#c9e7ff,#ffd1f5);}
 
 /* Layout */
+header{padding:34px 20px 18px;border-bottom:1px solid var(--line);text-align:center;background:#fff;position:relative;z-index:3}
+header h1{margin:0 0 6px;font-size:clamp(28px,5.4vw,40px);font-weight:900;letter-spacing:-.02em}
+header .sub{color:var(--muted);font-size:14px}
+main{max-width:var(--max);margin:24px auto;padding:0 24px 40px;display:grid;gap:16px;position:relative;z-index:1}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:0 10px 24px rgba(0,0,0,.06)}
+.row{display:grid;gap:12px}
+.grid-2{grid-template-columns:1fr 1fr}
+@media (max-width:900px){.grid-2{grid-template-columns:1fr}}
 
-header{padding:56px 18px 8px; text-align:center}
+h2{margin:0 0 6px;font-size:clamp(18px,2.4vw,22px)}
+label{font-size:13px;color:var(--muted)}
 
-.title{
-
-  font-weight:800; letter-spacing:.06em; margin:0;
-
-  font-size:clamp(40px,7vw,96px);
-
-  color:transparent;
-
-  background:linear-gradient(180deg,#b9ffd4 0%, #64ffb0 35%, #00ff88 60%, #0aff6f 100%);
-
-  -webkit-background-clip:text; background-clip:text;
-
-  text-shadow:0 0 18px rgba(0,255,136,.25), 0 0 3px rgba(0,255,136,.35);
-
+textarea{
+width:100%;min-height:220px;resize:vertical;
+background:#fff;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;line-height:1.6
 }
+input[type="file"],select{width:100%}
+select{background:#fff;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}
 
-.subtitle{color:var(--muted); margin:10px auto 0; font-weight:600; max-width:980px}
-
-.wrap{max-width:1150px;margin:0 auto;padding:22px 16px 64px}
-
-
-
-/* Grids y tarjetas */
-
-.grid{display:grid; gap:16px; margin-top:28px; grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
-
-.card{
-
-  background:linear-gradient(180deg,#071108,#0b190f);
-
-  border:1px solid var(--ring); border-radius:var(--radius); box-shadow:var(--shadow);
-
-  padding:18px; display:flex; flex-direction:column; gap:12px; transition:.15s ease transform, .15s ease border-color;
-
+.controls{display:flex;flex-wrap:wrap;gap:8px}
+button{
+appearance:none;border:1px solid var(--line);background:#fff;color:var(--text);
+padding:10px 14px;border-radius:10px;cursor:pointer
 }
+button.primary{background:#111827;color:#fff;border-color:#111827;font-weight:700}
+button:disabled{opacity:.5;cursor:not-allowed}
 
-.card:hover{ transform:translateY(-3px); border-color:#21ff9d; }
+.kv{background:#fafbfc;border:1px dashed var(--line);border-radius:10px;padding:10px;font-size:13px;color:var(--muted)}
+.kvs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:720px){.kvs{grid-template-columns:1fr}}
 
-.top{display:flex; align-items:center; gap:12px}
+.meter{height:8px;border-radius:999px;background:#fafbfc;border:1px solid var(--line);overflow:hidden}
+.meter > i{display:block;height:100%;width:0;background:linear-gradient(90deg,#22d3ee,#10b981)}
+.small{font-size:12px;color:var(--muted)}
+.ok{color:var(--ok)} .warn{color:var(--warn)} .err{color:var(--err)}
 
-.logo{width:56px;height:56px;border-radius:12px;flex:0 0 56px;background:#031107;border:1px solid #123b23;display:grid;place-items:center;overflow:hidden}
-
-.name{font-weight:800; font-size:1.05rem}
-
-.desc{color:#cfe7cf; margin-top:2px; line-height:1.35}
-
-.actions{display:flex; gap:10px; flex-wrap:wrap}
-
-.btn{
-
-  display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid #1f6a42;
-
-  background:linear-gradient(180deg,#17c972,#0aa65a); color:#05170f; text-decoration:none; font-weight:800; text-transform:uppercase; letter-spacing:.02em;
-
-}
-
-.btn:focus{outline:2px solid var(--accent); outline-offset:2px}
-
-
-
-/* Bloques informativos */
-
-.section-title{margin-top:40px}
-
-.seo .block{background:linear-gradient(180deg,#071108,#0b190f); border:1px solid var(--ring); border-radius:16px; padding:18px; margin:20px 0}
-
-.seo ul{margin:10px 0 0 18px}
-
-.seo p{margin:8px 0}
-
-
-
-/* FAQ */
-
-.faq details{background:#071108;border:1px solid var(--ring);border-radius:12px;margin:10px 0;padding:12px}
-
-.faq summary{cursor:pointer;font-weight:700}
-
-.faq p{margin:8px 0 0}
-
-
-
-/* Videos */
-
-.video-block{margin-top:36px;border:1px solid var(--ring);border-radius:16px;overflow:hidden; background:#030c06}
-
-.video-block header{padding:16px; text-align:left}
-
-.video-title{margin:0; font-size:1.1rem}
-
-.video-wrap{position:relative; padding-top:56.25%; background:#000}
-
-.video-wrap iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
-
-
-
-/* ===== Sección música: todo el texto en naranja neón ===== */
-
-#musica-ia{position:relative}
-
-#musica-ia, #musica-ia p, #musica-ia li, #musica-ia a, #musica-ia .desc, #musica-ia .name, #musica-ia h2, #musica-ia h3{
-
-  color:var(--neon);
-
-}
-
-#musica-ia .card{ border-color:#3d2200; background:linear-gradient(180deg,#0c0a04,#130f07) }
-
-#musica-ia .card:hover{ border-color:#ff8a2a; transform:translateY(-3px) }
-
-#musica-ia .logo{ background:#110b05; border-color:#3d2200 }
-
-.orange-title{
-
-  background:linear-gradient(180deg,#ffd8a6 0%, #ffa94d 35%, #ff7a00 65%, #ff6600 100%);
-
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-
-  text-shadow:0 0 18px rgba(255,122,0,.25), 0 0 3px rgba(255,122,0,.35);
-
-}
-
-/* Canvas lluvia naranja dentro de música */
-
-#matrix-orange{
-
-  position:absolute; inset:0; z-index:-1; display:block; opacity:.35; pointer-events:none;
-
-}
-
-
-
-/* Footer */
-
-footer{color:#9fb69f; text-align:center; padding:18px; border-top:1px solid var(--ring)}
-
-.navfoot{display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin-top:8px; font-size:.95rem}
-
-.small{font-size:.9rem}
-
+footer{padding:20px 24px 40px;text-align:center;color:var(--muted);font-size:12px;border-top:1px solid var(--line);background:#fff;position:relative;z-index:1}
 </style>
-
 </head>
-
-
-
 <body>
-
-<canvas id="matrix" aria-hidden="true"></canvas>
-
-
+<div class="frame">
+<div class="top"></div>
 
 <header>
-
-  <h1 class="title">PersonAPP.cl</h1>
-
-  <p class="subtitle">Directorio de <strong>aplicaciones de inteligencia artificial</strong> en español. Accede con un clic a <strong>ChatGPT</strong>, <strong>Google Gemini</strong> y <strong>Grok</strong> — y descubre cómo <strong>crear canciones con IA</strong> (Suno, Udio, RVC, ElevenLabs, Adobe Enhance).</p>
-
+<h1>personapp — tu lector de texto gratis</h1>
+<div class="sub">Lee en voz alta tu texto o PDF con voces del navegador. 100% local, rápido y privado.</div>
 </header>
 
-
-
-<main class="wrap">
-
-
-
-  <!-- ======== LISTA PRINCIPAL: APPS IA ======== -->
-
-  <section aria-label="Apps de IA">
-
-    <h2 class="section-title">Apps de IA destacadas (ChatGPT, Gemini, Grok)</h2>
-
-    <div class="grid" id="apps-ia">
-
-      <!-- ChatGPT -->
-
-      <article class="card" aria-label="ChatGPT — Inteligencia Artificial Conversacional">
-
-        <div class="top">
-
-          <div class="logo" aria-hidden="true">
-
-            <!-- SVG inline -->
-
-            <svg viewBox="0 0 64 64" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-
-              <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9fffd4"/><stop offset="1" stop-color="#00ff88"/></linearGradient></defs>
-
-              <rect width="64" height="64" rx="14" fill="#02150c"/>
-
-              <g fill="none" stroke="url(#g1)" stroke-width="4" stroke-linecap="round">
-
-                <path d="M32 10c-5 0-9 4-9 9 0 2 .6 3.9 1.7 5.5-4.9 1.5-8.5 6-8.5 11.3 0 6.5 5.3 11.7 11.7 11.7 2.5 0 4.8-.8 6.7-2.1 1.9 1.3 4.2 2.1 6.7 2.1 6.5 0 11.7-5.3 11.7-11.7 0-5.4-3.6-9.9-8.6-11.3 1.1-1.6 1.7-3.5 1.7-5.5 0-5-4-9-9-9"/>
-
-                <path d="M23 19l9 5 9-5M23 45l9-5 9 5M18 35h28"/>
-
-              </g>
-
-            </svg>
-
-          </div>
-
-          <div>
-
-            <h3 class="name">ChatGPT — IA conversacional</h3>
-
-            <p class="desc">Asistente para escribir, analizar, programar y crear ideas. Disponible en web, iOS y Android.</p>
-
-          </div>
-
-        </div>
-
-        <div class="actions">
-
-          <a class="btn" href="https://chatgpt.com/?utm_source=personapp&utm_medium=directory&utm_campaign=outbound&utm_content=chatgpt" target="_blank" rel="noopener">Web</a>
-
-          <a class="btn" href="https://apps.apple.com/app/openai-chatgpt/id6448311069?utm_source=personapp" target="_blank" rel="noopener">iOS</a>
-
-          <a class="btn" href="https://play.google.com/store/apps/details?id=com.openai.chatgpt&utm_source=personapp" target="_blank" rel="noopener">Android</a>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- Gemini -->
-
-      <article class="card" aria-label="Gemini — IA de Google para búsqueda y creación">
-
-        <div class="top">
-
-          <div class="logo" aria-hidden="true">
-
-            <svg viewBox="0 0 64 64" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-
-              <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#80ffd7"/><stop offset="1" stop-color="#00e0ff"/></linearGradient></defs>
-
-              <rect width="64" height="64" rx="14" fill="#031017"/>
-
-              <circle cx="32" cy="32" r="20" fill="none" stroke="url(#g2)" stroke-width="5"/>
-
-              <path d="M25 33h13v9" fill="none" stroke="url(#g2)" stroke-width="5" stroke-linecap="round"/>
-
-              <circle cx="44" cy="20" r="4" fill="url(#g2)"/>
-
-            </svg>
-
-          </div>
-
-          <div>
-
-            <h3 class="name">Gemini — IA de Google</h3>
-
-            <p class="desc">Modelo para búsqueda asistida y generación de contenido con integración al ecosistema Google.</p>
-
-          </div>
-
-        </div>
-
-        <div class="actions">
-
-          <a class="btn" href="https://gemini.google.com/?utm_source=personapp&utm_medium=directory&utm_campaign=outbound&utm_content=gemini" target="_blank" rel="noopener">Acceder</a>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- Grok -->
-
-      <article class="card" aria-label="Grok — xAI con acceso a X en tiempo real">
-
-        <div class="top">
-
-          <div class="logo" aria-hidden="true">
-
-            <svg viewBox="0 0 64 64" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-
-              <rect width="64" height="64" rx="14" fill="#0b0b0b"/>
-
-              <path d="M18 46L46 18M18 18l28 28" stroke="#e8ffe8" stroke-width="6" stroke-linecap="round" />
-
-            </svg>
-
-          </div>
-
-          <div>
-
-            <h3 class="name">Grok — xAI</h3>
-
-            <p class="desc">Modelo con acceso en tiempo real a X. Respuestas directas y tono desafiante.</p>
-
-          </div>
-
-        </div>
-
-        <div class="actions">
-
-          <a class="btn" href="https://x.ai/?utm_source=personapp&utm_medium=directory&utm_campaign=outbound&utm_content=grok" target="_blank" rel="noopener">Sitio oficial</a>
-
-        </div>
-
-      </article>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- ======== VIDEO PUBLICIDAD IA ======== -->
-
-  <section class="video-block" aria-label="Video demostrativo IA">
-
-    <header><h2 class="video-title">Publicidad generada 100% con IA</h2></header>
-
-    <div class="video-wrap">
-
-      <iframe
-
-        loading="lazy"
-
-        src="https://www.youtube-nocookie.com/embed/Ew7oZ0LO6AU?rel=0&modestbranding=1"
-
-        title="Publicidad generada 100% con IA"
-
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-
-        referrerpolicy="strict-origin-when-cross-origin"
-
-        allowfullscreen
-
-      ></iframe>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- ======== MÚSICA CON IA (texto naranja + matrix naranja) ======== -->
-
-  <section class="seo" aria-label="Crear canciones con IA" id="musica-ia">
-
-    <canvas id="matrix-orange" aria-hidden="true"></canvas>
-
-
-
-    <h2 class="section-title orange-title">🎶 Para crear canciones con IA</h2>
-
-    <p>Estas <strong>herramientas de inteligencia artificial musical</strong> permiten generar voces, beats e instrumentales. Elige una y prueba:</p>
-
-
-
-    <div class="grid" id="tools-music-ia">
-
-      <!-- Suno -->
-
-      <article class="card">
-
-        <div class="top">
-
-          <div class="logo" aria-hidden="true">
-
-            <!-- nota musical -->
-
-            <svg viewBox="0 0 64 64" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-
-              <rect width="64" height="64" rx="14" fill="#110b05"/>
-
-              <path d="M26 14v28a8 8 0 1 1-4-7V18l20-6v22a8 8 0 1 1-4-7V12z" fill="url(#ng1)"/>
-
-              <defs><linearGradient id="ng1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9a3c"/><stop offset="1" stop-color="#ff5a00"/></linearGradient></defs>
-
-            </svg>
-
-          </div>
-
-          <div>
-
-            <h3 class="name">Suno AI — Text-to-Music</h3>
-
-            <p class="desc">Escribe un prompt y genera canciones con letra, melodía e instrumental de alta calidad.</p>
-
-          </div>
-
-        </div>
-
-        <div class="actions">
-
-          <a class="btn" href="https://suno.ai/?utm_source=personapp&utm_medium=directory&utm_campaign=outbound&utm_content=suno" target="_blank" rel="noopener">Probar</a>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- Udio -->
-
-      <article class="card">
-
-        <div class="top">
-
-          <div class="logo" aria-hidden="true">
-
-            <svg viewBox="0 0 64 64" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-
-              <rect width="64" height="64" rx="14" fill="#110b05"/>
-
-              <circle cx="22" cy="32" r="6" fill="#ff7a00"/><circle cx="42" cy="32" r="6" fill="#ff9a3c"/>
-
-              <rect x="20" y="30" width="24" height="4" rx="2" fill="#ffd8a6"/>
-
-            </svg>
-
-          </div>
-
-          <div>
-
-            <h3 class="name">Udio — Música generativa</h3>
-
-            <p class="desc">Genera música a partir de texto y estilos. Ideal para canciones virales en TikTok y Spotify.</p>
-
-          </div>
-
-        </div>
-
-        <div class="actions">
-
-          <a class="btn" href="https://www.udio.com/?utm_source=personapp&utm_medium=directory&utm_campaign=outbound&utm_content=udio" target="_blank" rel="noopener">Probar</a>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- RVC -->
-
-      <article class="card">
-
-        <div class="top">
-
-          <div class="logo" aria-hidden="true">
-
-            <svg viewBox="0 0 64 64" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-
-              <rect width="64" height="64" rx="14" fill="#110b05"/>
-
-              <path d="M14 32h8l6-12 8 24 6-12h8" stroke="#ffb36b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-
-            </svg>
-
-          </div>
-
-          <div>
-
-            <h3 class="name">RVC — Voice Conversion</h3>
-
-            <p class="desc">Convierte tu voz para imitar timbres famosos (covers). Requiere instalación local y dataset de voz.</p>
-
-          </div>
-
-        </div>
-
-        <div class="actions">
-
-          <a class="btn" href="https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI" target="_blank" rel="noopener">Ver proyecto</a>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- ElevenLabs -->
-
-      <article class="card">
-
-        <div class="top">
-
-          <div class="logo" aria-hidden="true">
-
-            <svg viewBox="0 0 64 64" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-
-              <rect width="64" height="64" rx="14" fill="#110b05"/>
-
-              <path d="M18 44V20h10v8h8v-8h10v24H36v-8h-8v8z" fill="#ff7a00"/>
-
-            </svg>
-
-          </div>
-
-          <div>
-
-            <h3 class="name">ElevenLabs — Clonación de voz</h3>
-
-            <p class="desc">Voces hiperrealistas para narración y canto. Útil para maquetas y demos vocales.</p>
-
-          </div>
-
-        </div>
-
-        <div class="actions">
-
-          <a class="btn" href="https://elevenlabs.io/?utm_source=personapp&utm_medium=directory&utm_campaign=outbound&utm_content=elevenlabs" target="_blank" rel="noopener">Probar</a>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- Adobe Enhance -->
-
-      <article class="card">
-
-        <div class="top">
-
-          <div class="logo" aria-hidden="true">
-
-            <svg viewBox="0 0 64 64" width="56" height="56" xmlns="http://www.w3.org/2000/svg">
-
-              <rect width="64" height="64" rx="14" fill="#110b05"/>
-
-              <path d="M18 42l10-20 10 20 4-8h4" stroke="#ff7a00" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-
-            </svg>
-
-          </div>
-
-          <div>
-
-            <h3 class="name">Adobe Enhance — Limpieza y master</h3>
-
-            <p class="desc">Mejora voces y mezcla final con IA. Elimina ruido y pule el audio para publicación.</p>
-
-          </div>
-
-        </div>
-
-        <div class="actions">
-
-          <a class="btn" href="https://podcast.adobe.com/enhance?utm_source=personapp&utm_medium=directory&utm_campaign=outbound&utm_content=enhance" target="_blank" rel="noopener">Probar</a>
-
-        </div>
-
-      </article>
-
-    </div>
-
-
-
-    <!-- Ejemplo: NostalgIA (con espejos y default el que enviaste) -->
-
-    <div class="block" style="margin-top:16px">
-
-      <h3>Ejemplo de canción creada con IA: “NostalgIA”</h3>
-
-      <p>Una demostración viral del uso de IA en música. La pista recrea voces mediante técnicas de clonación de voz y producción generativa.</p>
-
-
-
-      <div class="actions" style="margin:10px 0;">
-
-        <button class="btn" data-mirror="0" type="button">Espejo 1</button>
-
-        <button class="btn" data-mirror="1" type="button">Espejo 2</button>
-
-        <button class="btn" data-mirror="2" type="button">Espejo 3</button>
-
-        <button class="btn" data-mirror="3" type="button">Espejo 4</button>
-
-      </div>
-
-
-
-      <div class="video-wrap" style="margin-top:8px;">
-
-        <iframe
-
-          id="nostalgPlayer"
-
-          loading="lazy"
-
-          src="https://www.youtube-nocookie.com/embed/wtaqzMdBqZA?rel=0&modestbranding=1&playsinline=1"
-
-          title="NostalgIA — Canción creada con IA"
-
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-
-          referrerpolicy="strict-origin-when-cross-origin"
-
-          allowfullscreen
-
-        ></iframe>
-
-      </div>
-
-
-
-      <p style="margin-top:10px">¿No se ve? Abre directo:
-
-        <a href="https://youtu.be/wtaqzMdBqZA" target="_blank" rel="noopener">Espejo 1</a> ·
-
-        <a href="https://www.youtube.com/watch?v=XIg9fNaw0rE" target="_blank" rel="noopener">Espejo 2</a> ·
-
-        <a href="https://www.youtube.com/watch?v=blvRvpslozQ" target="_blank" rel="noopener">Espejo 3</a> ·
-
-        <a href="https://www.youtube.com/watch?v=yRswYP93184" target="_blank" rel="noopener">Espejo 4</a>
-
-      </p>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- ======== INFORMACIÓN & FAQ ======== -->
-
-  <section class="seo" aria-label="Información sobre PersonAPP e IA">
-
-    <div class="block">
-
-      <h2>¿Qué es PersonAPP.cl?</h2>
-
-      <p><strong>PersonAPP.cl</strong> es un directorio en español de <strong>aplicaciones de inteligencia artificial</strong>. Aquí encuentras, comparas y accedes de forma segura a <strong>ChatGPT</strong>, <strong>Google Gemini</strong> y <strong>Grok</strong> mediante enlaces oficiales.</p>
-
-      <p>Nuestro objetivo es acercar la <em>IA en Chile y Latinoamérica</em> a emprendedores, estudiantes y profesionales, con una experiencia rápida, clara y confiable.</p>
-
-    </div>
-
-
-
-    <div class="block faq" id="faqs">
-
-      <h2>Preguntas frecuentes (FAQ)</h2>
-
-      <details>
-
-        <summary>¿PersonAPP.cl es gratuito?</summary>
-
-        <p>Sí. PersonAPP.cl es un directorio gratuito que te redirige a las páginas oficiales de cada app de IA.</p>
-
-      </details>
-
-      <details>
-
-        <summary>¿Puedo descargar ChatGPT en iOS y Android?</summary>
-
-        <p>Sí. En las tarjetas encontrarás los botones directos a App Store y Google Play.</p>
-
-      </details>
-
-      <details>
-
-        <summary>¿Cuál es la diferencia entre ChatGPT, Gemini y Grok?</summary>
-
-        <p>ChatGPT es un asistente conversacional versátil; Gemini integra servicios de Google; Grok destaca por su conexión a X y respuestas directas.</p>
-
-      </details>
-
-      <details>
-
-        <summary>¿Cómo se mantiene actualizado el directorio?</summary>
-
-        <p>Revisamos periódicamente los enlaces oficiales y añadimos nuevas herramientas de IA utilizadas en Chile y el mundo.</p>
-
-      </details>
-
-    </div>
-
-  </section>
-
-
-
+<main role="main">
+<!-- Entrada -->
+<section class="card" aria-labelledby="t1">
+<h2 id="t1">1) Escribe o pega tu texto (prioridad)</h2>
+<label for="textInput">Texto</label>
+<textarea id="textInput" placeholder="Pega aquí el texto y presiona ▶️ Probar voz o ▶️ Leer"></textarea>
+<div class="kvs" style="margin-top:12px">
+<div class="kv"><b>Estado:</b> <span id="status">Listo</span></div>
+<div class="kv"><b>Soporte voz:</b> <span id="support">—</span></div>
+<div class="kv"><b>Longitud (caracteres):</b> <span id="len">0</span></div>
+</div>
+</section>
+
+<!-- PDF opcional -->
+<section class="card" aria-labelledby="t2">
+<h2 id="t2">2) (Opcional) Subir PDF / TXT</h2>
+<div class="row grid-2">
+<div>
+<label for="fileInput">Archivo (.pdf o .txt)</label>
+<input id="fileInput" type="file" accept=".pdf,.txt"/>
+<div class="small">Si el PDF es escaneado (imagen), no tendrá texto. Podemos agregar OCR si lo necesitas.</div>
+</div>
+<div>
+<label for="extracted">Texto extraído</label>
+<textarea id="extracted" placeholder="Aquí aparecerá el texto del PDF/TXT…"></textarea>
+</div>
+</div>
+</section>
+
+<!-- Voces y parámetros -->
+<section class="card" aria-labelledby="t3">
+<h2 id="t3">3) Voz y parámetros</h2>
+<div class="row grid-2">
+<div>
+<label for="voiceSelect">Voz</label>
+<select id="voiceSelect"></select>
+<div class="small">Sugerido: voces <b>es-ES</b> o <b>es-*</b> para español.</div>
+</div>
+<div>
+<label for="rate">Velocidad</label>
+<input id="rate" type="range" min="0.5" max="2" step="0.1" value="1"/>
+<div class="meter"><i id="rateBar"></i></div>
+</div>
+</div>
+<div class="row grid-2">
+<div>
+<label for="pitch">Tono</label>
+<input id="pitch" type="range" min="0" max="2" step="0.1" value="1"/>
+<div class="meter"><i id="pitchBar"></i></div>
+</div>
+<div>
+<label for="volume">Volumen</label>
+<input id="volume" type="range" min="0" max="1" step="0.1" value="1"/>
+<div class="meter"><i id="volumeBar"></i></div>
+</div>
+</div>
+</section>
+
+<!-- Controles -->
+<section class="card" aria-labelledby="t4">
+<h2 id="t4">4) Controles</h2>
+<div class="controls">
+<button id="testBtn" class="primary" disabled>▶️ Probar voz</button>
+<button id="speakBtn" class="primary" disabled>▶️ Leer texto</button>
+<button id="pauseBtn" disabled>⏸️ Pausar</button>
+<button id="resumeBtn" disabled>▶️ Reanudar</button>
+<button id="stopBtn" disabled>⏹️ Detener</button>
+<button id="clearBtn">🧹 Limpiar</button>
+</div>
+<div class="small" style="margin-top:8px">
+Por políticas del navegador, el audio comienza tras un clic del usuario.
+</div>
+</section>
+
+<!-- Progreso -->
+<section class="card" aria-labelledby="t5">
+<h2 id="t5">Progreso</h2>
+<div class="meter"><i id="progressBar"></i></div>
+<div class="small" style="margin-top:6px">
+<span id="progressText">0%</span> — <span id="chunkInfo">0 / 0</span> fragmentos
+</div>
+</section>
 </main>
 
-
-
 <footer>
-
-  <nav class="navfoot" aria-label="Enlaces del sitio">
-
-    <a href="#apps-ia">Apps de IA</a>
-
-    <a href="#musica-ia">Música con IA</a>
-
-    <a href="#faqs">Preguntas frecuentes</a>
-
-    <a href="mailto:hola@personapp.cl">Contacto</a>
-
-  </nav>
-
-  <div class="small">© <span id="year"></span> PersonAPP.cl — Enlaces oficiales a apps de IA en Chile y el mundo.</div>
-
+Hecho con personapp — lector de texto gratis (Web Speech API + pdf.js). Nada se sube, todo queda en tu navegador.
 </footer>
 
-
-
-<!-- ========= SCHEMA.ORG esencial ========= -->
-
-<script type="application/ld+json">
-
-{"@context":"https://schema.org","@type":"WebSite","name":"PersonAPP.cl","url":"https://personapp.cl/","potentialAction":{"@type":"SearchAction","target":"https://personapp.cl/?q={search_term_string}","query-input":"required name=search_term_string"}}
-
-</script>
-
-<script type="application/ld+json">
-
-{"@context":"https://schema.org","@type":"Organization","name":"PersonAPP.cl","url":"https://personapp.cl/","logo":"https://personapp.cl/img/preview.png"}
-
-</script>
-
-
-
-<!-- ========= JS: año + Matrix (verde global) + Matrix naranja por sección + espejos NostalgIA ========= -->
-
-<script defer>
-
-document.getElementById("year").textContent = new Date().getFullYear();
-
-
-
-/* Matrix verde global */
-
-(function(){
-
-  const c = document.getElementById('matrix'); if (!c) return;
-
-  const ctx = c.getContext('2d'); let w,h,cols,drops,fontSize;
-
-  const chars='アイウエオカキクケコサシスセソタチツテト0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-  function resize(){
-
-    const dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
-
-    w=c.clientWidth=window.innerWidth; h=c.clientHeight=window.innerHeight;
-
-    c.width=Math.floor(w*dpr); c.height=Math.floor(h*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
-
-    fontSize=Math.max(14,Math.min(22,Math.round(w/60))); ctx.font=fontSize+"px monospace";
-
-    cols=Math.ceil(w/fontSize); drops=new Array(cols).fill(0).map(()=>Math.floor(Math.random()*h/fontSize));
-
-  }
-
-  function tick(){
-
-    ctx.fillStyle="rgba(0,0,0,0.08)"; ctx.fillRect(0,0,w,h);
-
-    for(let i=0;i<cols;i++){
-
-      const t=chars[Math.floor(Math.random()*chars.length)], x=i*fontSize, y=drops[i]*fontSize;
-
-      const g=ctx.createLinearGradient(x,y-20,x,y+20); g.addColorStop(0,"#00ff88"); g.addColorStop(1,"#b8ffde");
-
-      ctx.fillStyle=g; ctx.fillText(t,x,y);
-
-      if (y>h && Math.random()>0.975) drops[i]=0; else drops[i]++;
-
-    }
-
-    requestAnimationFrame(tick);
-
-  }
-
-  resize(); tick(); window.addEventListener('resize',resize,{passive:true});
-
-})();
-
-
-
-/* Matrix naranja solo en #musica-ia */
-
-(function(){
-
-  const container=document.getElementById('musica-ia'), c=document.getElementById('matrix-orange'); if(!container||!c) return;
-
-  const ctx=c.getContext('2d'); let w,h,cols,drops,fontSize,running=false;
-
-  const chars='ｱｲｳｴｵｶｷｸｹｺﾀﾁﾂﾃﾄ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-  function sizeToSection(){
-
-    const rect=container.getBoundingClientRect(); const dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
-
-    w=c.width=Math.floor(rect.width*dpr); h=c.height=Math.floor(rect.height*dpr);
-
-    c.style.width=rect.width+'px'; c.style.height=rect.height+'px'; ctx.setTransform(dpr,0,0,dpr,0,0);
-
-    fontSize=Math.max(12,Math.min(20,Math.round(rect.width/70))); ctx.font=fontSize+"px monospace";
-
-    cols=Math.max(1,Math.ceil(rect.width/fontSize)); drops=new Array(cols).fill(0).map(()=>Math.floor(Math.random()*rect.height/fontSize));
-
-  }
-
-  function tick(){
-
-    if(!running) return;
-
-    ctx.fillStyle="rgba(0,0,0,0.10)"; ctx.fillRect(0,0,w,h);
-
-    for(let i=0;i<cols;i++){
-
-      const t=chars[Math.floor(Math.random()*chars.length)], x=i*fontSize, y=drops[i]*fontSize;
-
-      const g=ctx.createLinearGradient(x,y-18,x,y+18); g.addColorStop(0,"#ff9a3c"); g.addColorStop(1,"#ff5a00");
-
-      ctx.fillStyle=g; ctx.fillText(t,x,y);
-
-      if (y>(h/fontSize) && Math.random()>0.975) drops[i]=0; else drops[i]++;
-
-    }
-
-    requestAnimationFrame(tick);
-
-  }
-
-  const io=new IntersectionObserver(entries=>{
-
-    entries.forEach(en=>{ if(en.isIntersecting){running=true; sizeToSection(); tick();} else {running=false;} });
-
-  },{threshold:0.05}); io.observe(container);
-
-  window.addEventListener('resize',()=>{ if(running) sizeToSection(); },{passive:true});
-
-})();
-
-
-
-/* Selector de espejos para NostalgIA */
-
-(function(){
-
-  const mirrors=[
-
-    "https://www.youtube-nocookie.com/embed/wtaqzMdBqZA?rel=0&modestbranding=1&playsinline=1",
-
-    "https://www.youtube-nocookie.com/embed/XIg9fNaw0rE?rel=0&modestbranding=1&playsinline=1",
-
-    "https://www.youtube-nocookie.com/embed/blvRvpslozQ?rel=0&modestbranding=1&playsinline=1",
-
-    "https://www.youtube-nocookie.com/embed/yRswYP93184?rel=0&modestbranding=1&playsinline=1"
-
-  ];
-
-  const frame=document.getElementById('nostalgPlayer'); if(!frame) return;
-
-  document.querySelectorAll('button[data-mirror]').forEach(btn=>{
-
-    btn.addEventListener('click',()=>{ const i=parseInt(btn.getAttribute('data-mirror'),10)||0; frame.src=mirrors[i]; });
-
-  });
-
-})();
-
-</script>
-
-
-
-<!-- (Opcional) Google Analytics 4 -->
-
-<!--
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXX"></script>
+<div class="bottom"></div>
+</div>
+
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" integrity="sha512-KiWzZfa7qv3Zj1mE2AQfCMyJOQ7NlXQK1yXQ2p6mQ2nKq35aSgQbY0ciV9ewVR5Xk+U9VujwQcZ1B1v+0s0y5A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'</script>
 
 <script>
+/* ========= Utilidades/UI ========= */
+const $ = s => document.querySelector(s);
+const UI = {
+status: $('#status'), support: $('#support'), len: $('#len'),
+textInput: $('#textInput'), extracted: $('#extracted'),
+voiceSelect: $('#voiceSelect'),
+rate: $('#rate'), pitch: $('#pitch'), volume: $('#volume'),
+rateBar: $('#rateBar'), pitchBar: $('#pitchBar'), volumeBar: $('#volumeBar'),
+testBtn: $('#testBtn'), speakBtn: $('#speakBtn'),
+pauseBtn: $('#pauseBtn'), resumeBtn: $('#resumeBtn'), stopBtn: $('#stopBtn'), clearBtn: $('#clearBtn'),
+progressBar: $('#progressBar'), progressText: $('#progressText'), chunkInfo: $('#chunkInfo'),
+fileInput: $('#fileInput')
+};
+const state = { voices: [], chunks: [], index: 0, speaking: false, paused: false, utter: null };
 
-  window.dataLayer = window.dataLayer || [];
+const setStatus = (msg, cls='') => { UI.status.textContent = msg; UI.status.className = cls; };
+const setSupport = (msg) => UI.support.textContent = msg;
+const updateLen = () => UI.len.textContent = getSanitizedText(UI.textInput.value).length;
+const setButtons = () => {
+const hasSpeech = ('speechSynthesis' in window && 'SpeechSynthesisUtterance' in window);
+const hasText = getSanitizedText(UI.textInput.value).length > 0;
+UI.testBtn.disabled = !hasSpeech;
+UI.speakBtn.disabled = !hasSpeech || !hasText;
+UI.pauseBtn.disabled = !(state.speaking && !speechSynthesis.paused);
+UI.resumeBtn.disabled= !(speechSynthesis.paused);
+UI.stopBtn.disabled = !state.speaking;
+};
+function updateMeters(){
+UI.rateBar.style.width = ((UI.rate.value-0.5)/1.5*100)+'%';
+UI.pitchBar.style.width = (UI.pitch.value/2*100)+'%';
+UI.volumeBar.style.width = (UI.volume.value*100)+'%';
+}
+updateMeters();
+UI.rate.addEventListener('input', updateMeters);
+UI.pitch.addEventListener('input', updateMeters);
+UI.volume.addEventListener('input', updateMeters);
 
-  function gtag(){dataLayer.push(arguments)}
+/* ========= Limpieza de texto ========= */
+function getSanitizedText(raw){
+if (!raw) return '';
+let t = raw.normalize('NFC').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g,'');
+t = t.replace(/\u00A0/g,' ');
+t = t.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+return t;
+}
+function onTextChanged(){ updateLen(); setButtons(); }
+UI.textInput.addEventListener('input', onTextChanged); onTextChanged();
 
-  gtag('js', new Date()); gtag('config','G-XXXX');
+/* ========= Soporte de voz ========= */
+function checkSpeechSupport(){
+const ok = ('speechSynthesis' in window && 'SpeechSynthesisUtterance' in window);
+setSupport(ok ? '✅ Disponible' : '❌ No disponible (usa Chrome/Edge/Safari)');
+setButtons();
+}
+checkSpeechSupport();
 
+/* ========= Voces ========= */
+function loadVoices(){
+const list = speechSynthesis.getVoices().sort((a,b)=>a.lang.localeCompare(b.lang));
+state.voices = list;
+UI.voiceSelect.innerHTML = '';
+list.forEach((v,i)=>{
+const o = document.createElement('option');
+o.value = i; o.textContent = `${v.name} — ${v.lang}${v.default?' (default)':''}`;
+UI.voiceSelect.appendChild(o);
+});
+const esIdx = list.findIndex(v=>/^es(-|_)/i.test(v.lang));
+UI.voiceSelect.value = esIdx >= 0 ? esIdx : 0;
+}
+loadVoices();
+if (typeof speechSynthesis !== 'undefined') speechSynthesis.onvoiceschanged = loadVoices;
+
+/* ========= División en fragmentos ========= */
+function chunkText(text, maxLen=1500){
+const paras = text.split(/\n{2,}/);
+const chunks = []; let cur = '';
+const push = ()=>{ if(cur.trim()) { chunks.push(cur.trim()); cur=''; } };
+for(const p of paras){
+if((cur+'\n\n'+p).length <= maxLen){ cur = cur ? cur+'\n\n'+p : p; }
+else{
+const sents = p.split(/(?<=[\.\?\!…:;])\s+/);
+for(const s of sents){
+if((cur+' '+s).length <= maxLen){ cur = cur ? cur+' '+s : s; }
+else{
+push();
+if(s.length <= maxLen) cur = s;
+else{ for(let i=0;i<s.length;i+=maxLen) chunks.push(s.slice(i,i+maxLen)); cur=''; }
+}
+}
+}
+}
+push(); return chunks;
+}
+function updateProgress(){
+const total = state.chunks.length || 1;
+const pct = Math.round((state.index/total)*100);
+UI.progressBar.style.width = pct + '%';
+UI.progressText.textContent = pct + '%';
+UI.chunkInfo.textContent = `${Math.min(state.index,total)} / ${total}`;
+setButtons();
+}
+
+/* ========= Lectura ========= */
+function speakNext(){
+if(state.index >= state.chunks.length){
+setStatus('Lectura finalizada ✅','ok');
+state.speaking = false; updateProgress(); return;
+}
+const utter = new SpeechSynthesisUtterance(state.chunks[state.index]);
+state.utter = utter;
+const v = state.voices[+UI.voiceSelect.value] || state.voices[0];
+if(v) utter.voice = v;
+utter.rate = +UI.rate.value; utter.pitch = +UI.pitch.value; utter.volume = +UI.volume.value;
+
+utter.onstart = ()=>{ state.speaking = true; setStatus(`Leyendo ${state.index+1}/${state.chunks.length}…`); updateProgress(); };
+utter.onend = ()=>{ state.index++; updateProgress(); speakNext(); };
+utter.onerror = (e)=>{ console.error(e); setStatus('Error durante la lectura.','err'); state.speaking=false; updateProgress(); };
+
+speechSynthesis.speak(utter); setButtons();
+}
+
+UI.testBtn.addEventListener('click', ()=>{
+if (!('speechSynthesis' in window)) { setStatus('Sin soporte de voz.','err'); return; }
+speechSynthesis.cancel();
+const u = new SpeechSynthesisUtterance('Hola, esta es una prueba de voz de personapp.');
+const v = state.voices[+UI.voiceSelect.value] || state.voices[0];
+if(v) u.voice = v;
+u.rate = +UI.rate.value; u.pitch = +UI.pitch.value; u.volume = +UI.volume.value;
+u.onstart=()=>{ state.speaking=true; setStatus('Prueba de voz…'); setButtons(); };
+u.onend=()=>{ state.speaking=false; setStatus('Listo'); setButtons(); };
+speechSynthesis.speak(u);
+});
+
+UI.speakBtn.addEventListener('click', ()=>{
+const t = getSanitizedText(UI.textInput.value);
+if(!t){ setStatus('No hay texto limpio para leer.','warn'); return; }
+speechSynthesis.cancel();
+state.chunks = chunkText(t, 1500);
+state.index = 0; updateProgress(); setStatus('Iniciando lectura…'); speakNext();
+});
+
+UI.pauseBtn.addEventListener('click', ()=>{ if(speechSynthesis.speaking && !speechSynthesis.paused){ speechSynthesis.pause(); state.paused=true; setStatus('Pausado ⏸️'); setButtons(); }});
+UI.resumeBtn.addEventListener('click', ()=>{ if(speechSynthesis.paused){ speechSynthesis.resume(); state.paused=false; setStatus('Reanudando ▶️'); setButtons(); }});
+UI.stopBtn.addEventListener('click', ()=>{ speechSynthesis.cancel(); state.speaking=false; setStatus('Detenido ⏹️'); updateProgress(); });
+UI.clearBtn.addEventListener('click', ()=>{
+speechSynthesis.cancel(); UI.textInput.value=''; UI.extracted.value='';
+state.chunks=[]; state.index=0; state.speaking=false; updateLen(); updateProgress(); setStatus('Listo');
+});
+
+/* ========= PDF opcional ========= */
+UI.fileInput.addEventListener('change', async (e)=>{
+const f = e.target.files?.[0]; if(!f) return;
+const ext = (f.name.split('.').pop()||'').toLowerCase();
+setStatus('Procesando archivo…');
+try{
+if(ext==='txt'){
+const txt = await f.text(); UI.extracted.value = txt; setStatus('TXT cargado ✅','ok');
+}else if(ext==='pdf'){
+const buf = await f.arrayBuffer();
+const text = await extractTextFromPDF(buf);
+UI.extracted.value = text.trim(); setStatus('PDF extraído ✅','ok');
+}else{ setStatus('Formato no soportado (usa .pdf o .txt).','warn'); }
+}catch(err){ console.error(err); setStatus('No se pudo extraer texto (PDF escaneado o error).','err'); }
+});
+
+async function extractTextFromPDF(arrayBuffer){
+const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+let out = '';
+for(let p=1;p<=pdf.numPages;p++){
+const page = await pdf.getPage(p);
+const content = await page.getTextContent();
+const strings = content.items.map(it => (typeof it.str==='string') ? it.str : (it?.chars?.map(c=>c?.unicode||'').join('')||''));
+out += strings.join(' ') + '\n\n';
+}
+if(!out.trim()) throw new Error('PDF sin texto (escaneado).');
+return getSanitizedText(out);
+}
+
+/* Inicial */
+updateProgress(); setButtons();
 </script>
-
--->
-
 </body>
-
 </html>
 
 
